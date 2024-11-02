@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>EvTTC Benchmark  </title>
+    <title>EvTTC Benchmark  | Sensor Suite</title>
     <meta name="author" content="EvTTC Benchmark  " />
     <meta name="description" content="An Event Camera Dataset for Time-to-Collision Estimation.
 " />
@@ -18,7 +18,7 @@
     <!-- OpenGraph -->
     <meta property="og:site_name" content="EvTTC Benchmark  " />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="EvTTC Benchmark   | Home" />
+    <meta property="og:title" content="EvTTC Benchmark   | Sensor Suite" />
     <meta property="og:url" content="http://localhost:5500/EvTTC/about/sensor" />
     <meta property="og:description" content="An Event Camera Dataset for Time-to-Collision Estimation.
 " />
@@ -27,7 +27,7 @@
 
     <!-- Twitter card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Home" />
+    <meta name="twitter:title" content="Sensor Suite" />
     <meta name="twitter:description" content="An Event Camera Dataset for Time-to-Collision Estimation.
 " />
     
@@ -45,7 +45,7 @@
         "@type": "WebSite",
         "description": "An Event Camera Dataset for Time-to-Collision Estimation.
 ",
-        "headline": "Home",
+        "headline": "Sensor Suite",
         "sameAs": ["https://nail-hnu.github.io/EvTTC/", "https://sites.google.com/view/zhouyi-joey/home"],
         "name": "EvTTC Benchmark  ",
         "@context": "https://schema.org"
@@ -155,43 +155,53 @@
   <picture>
     <!-- Fallback to the original file -->
     <div style="text-align: center;">
-      <img class="img-fluid rounded z-depth-1" src="/EvTTC/assets/img/real_sensors.png" title="real_sensors_view" style="width: 70%; height: auto;">
+      <p><img src="/EvTTC/assets/img/eye_catcher3.png" alt="sensor" style="max-width:98%;"></p>
     </div>
   </picture>
 </div>
 </div>
-<div class="caption">
-An overview of the data collection setup.
+<div class="caption" style="text-align: justify; width: 100%; margin: 0 auto;">
+Fig. 1 Left: An overview of the data collection setup. Right: The top 
+image shows a bird's-eye view of the vehicle on the highway, with fields 
+of view and detection distances indicated by circled letters. The bottom row presents
+ intensity images and accumulated event data captured by both the Medium Focal-Length and 
+ Telephoto-Lens camera pairs.
 </div>
 
 <p><br></p>
-
-<p>We present a comprehensive set of data sequences which is recorded by a rich sensor setup placed on a versatile 3D-printed holder. It is centered around an event-based stereo camera, and further contains a regular stereo camera, an RGB-D sensor in the center, a LiDAR mounted on the top, and an IMU at the rear. The holder can be mounted on various platforms: (1) a simple handle for hand-held sequences, (2) a wheeled tripod, and (3) a helmet. Sensors are listed as below, where further specifications can be found in the <a href="/EvTTC/assets/pdf/EvTTC.pdf">paper</a>.</p>
+<article>
+<p style="text-align: justify; width: 100%; margin: 0 auto; line-height: 1.6;">
+  The raw data used for estimating TTC contain RGB images
+  and corresponding event streams. The employed event camera is Prophesee
+  EVK-v4 (sensor size 1/2.5”) that has a spatial resolution of
+  1280 × 720 pixels. To ensure a similar field of view (FOV),
+  an FLIR Blackfly-S RGB camera (sensor size 1/2.3”) with a
+  1920×1200 resolution is used and equipped with an identical
+  lens. 
+  To provide ground truth for the dataset, an automotive-
+  grade solid-state LiDAR (Livox HAP (TX)) and two high-performance
+  GNSS/INS units (UG005 X1 and CGI-610) were prepared.
+  Detailed parameters of each device can be found in the <a href="/EvTTC/assets/pdf/EvTTC.pdf">paper</a>.</p>
 
 <ul>
-  <li>2x <a href="https://www.prophesee.ai/buy-event-based-products/" target="_blank" rel="noopener noreferrer">Prophesee Gen3 CD</a> with <a href="https://lenses.kowa-usa.com/jcm-series/410-lm5jc1m.html" target="_blank" rel="noopener noreferrer">Kowa LM5JCM</a>
-</li>
-  <li>2x <a href="https://www.flir.com/products/grasshopper3-usb3/?model=GS3-U3-51S5C-C" target="_blank" rel="noopener noreferrer">FLIR Grasshopper3</a> with <a href="https://lenses.kowa-usa.com/jc-series/479-lm6jc.html" target="_blank" rel="noopener noreferrer">Kowa LM6JC</a>
-</li>
-  <li><a href="https://azure.microsoft.com/en-us/services/kinect-dk/" target="_blank" rel="noopener noreferrer">Azure Kinect</a></li>
-  <li><a href="https://ouster.com/products/scanning-lidar/os0-sensor/" target="_blank" rel="noopener noreferrer">Ouster OS0-128</a></li>
-  <li><a href="https://www.xsens.com/products/mti-10-series" target="_blank" rel="noopener noreferrer">XSens MTi-30 AHRS</a></li>
-  <li><a href="https://optitrack.com/" target="_blank" rel="noopener noreferrer">OptiTrack Motion Capture (MoCap) System</a></li>
-  <li><a href="https://www.faro.com/en/Products/Hardware/Focus-Laser-Scanners" target="_blank" rel="noopener noreferrer">FARO Focus Laser Scanner</a></li>
+  <li>
+    2x <a href="https://www.prophesee.ai/event-camera-evk4/" target="_blank" rel="noopener noreferrer">Prophesee EVK-v4</a>
+  </li>
+  <li>
+    2x <a href="https://softwareservices.flir.com/BFS-PGE-23S3/latest/Model/readme.html" target="_blank" rel="noopener noreferrer">FLIR Blackfly-S</a>
+  </li>
+  <li><a href="https://www.livoxtech.com/cn/hap" target="_blank" rel="noopener noreferrer">Livox HAP (TX)</a></li>
+  <li><a href="https://www.bynav.com/en/products/gnss-ins-integration/x-one.html" target="_blank" rel="noopener noreferrer">UG005 X1</a></li>
+  <li><a href="https://chcnav.com/product-detail/cgi+-+610" target="_blank" rel="noopener noreferrer">CGI-610</a></li>
 </ul>
+</article>
 
-          </article>
-
-        </div>
-
-    </div>
-
-    <!-- Footer -->    
-    <footer class="fixed-bottom">
-      <div class="container mt-0" style="width:100%;text-align:center;">
-        © 2022 Mobile Perception Lab, ShanghaiTech University, China. All rights reserved.
-      </div>
-    </footer>
+<!-- Footer -->    
+<footer class="fixed-bottom">
+  <div class="container mt-0" style="width:100%;text-align:center;">
+    © 2024 Neuromorphic Automation and Intelligence Lab (NAIL), China. All rights reserved.
+  </div>
+</footer>
 
     <!-- JavaScripts -->
     <!-- jQuery -->
