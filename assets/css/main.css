@@ -66,6 +66,12 @@ body.sticky-bottom-footer {
     padding-bottom:0;
 }
 
+.content-box {
+    border: 2px solid #000; /* Add black border */
+    padding: 15px;          /* Add padding inside the box */
+    margin-bottom: 20px;    /* Add margin below the box */
+}
+
 .container {
     max-width:800px;
 }
@@ -778,3 +784,4 @@ d-appendix a:hover,d-appendix a.footnote-backlink:hover {
 d-article d-contents nav {
     grid-column:none;
 }
+
