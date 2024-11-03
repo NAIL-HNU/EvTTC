@@ -117,8 +117,12 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="/EvTTC/calibration/">Calibration<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item ">
-                  <a class="nav-link" href="/EvTTC/download/">Download</a>
+                <li class="nav-item dropdown ">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="nav-link" href="/EvTTC/download/download/">Download</a>
+                  <a class="nav-link" href="/EvTTC/download/data_format/">Data Format</a>
+                </div>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link" href="/EvTTC/competition/">Competition</a>
@@ -145,13 +149,11 @@
             <p class="post-description"></p>
           </header>
 
-          <article>
-            <p><br></p>
+<article>
+<p><br></p>
 
 
 <h4>Intrinsic and Extrinsic Calibration of Cameras</h4>
-
-<p><br></p>
 
 <p>We
   used the </strong> <a href="https://github.com/ethz-asl/kalibr">Kalibr toolbox</a>
@@ -163,21 +165,137 @@
   described in Frequency Cam.
 </p>
 
+<h5>2024-07-15</h5>
 <ul>
   <li>
-<strong>Left Event Camera Intrinsics</strong>: <a href="/EvTTC/assets/zip/left_event_camera_intrinsic_data.zip">data</a>, <a href="/EvTTC/assets/yaml/left_event_camera_intrinsic_results.yaml">results</a>
-</li>
+  <strong>8-mm Lens Camera Pair</strong>: <a href="https://drive.google.com/file/d/1OLvbSf_az4sr8R4KHTz7-rESujEgselB/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/19YwIu2Ulah9kU-f-G4Ng5cN4TZQIqErm/view?usp=drive_link">results</a>
+  </li>
   <li>
-<strong>Right Event Camera Intrinsics</strong>: <a href="/EvTTC/assets/zip/right_event_camera_intrinsic_data.zip">data</a>, <a href="/EvTTC/assets/yaml/right_event_camera_intrinsic_results.yaml">results</a>
-</li>
-  <li>
-<strong>Left Regular Camera Intrinsics</strong>: <a href="https://drive.google.com/file/d/12hnWhDFWPDZQJsFaNvBVU_iyimbVeRc7/view?usp=sharing" target="_blank" rel="noopener noreferrer">data</a>, <a href="/EvTTC/assets/yaml/left_regular_camera_intrinsic_results.yaml">results</a>
-</li>
-  <li>
-<strong>Right Regular Camera Intrinsics</strong>: <a href="https://drive.google.com/file/d/1FLC0lQ2mBSLqh00IQQCq-b4W7dQ_LEd5/view?usp=sharing" target="_blank" rel="noopener noreferrer">data</a>, <a href="/EvTTC/assets/yaml/right_regular_camera_intrinsic_results.yaml">results</a>
-</li>
+    <strong>16-mm Lens Camera Pair</strong>: <a href="https://drive.google.com/file/d/137IznX7TMryi6aABN19VrUN3N-6MAG63/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/122UToq2FEy0TpaGd-5MtdT9Hv5k0BMCh/view?usp=drive_link">results</a>
+  </li>
 </ul>
 
+<h5>2024-08-08</h5>
+<ul>
+  <!-- <li>
+  <strong>8-mm Lens Camera Pair</strong>: <a href="https://drive.google.com/file/d/1OLvbSf_az4sr8R4KHTz7-rESujEgselB/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/19YwIu2Ulah9kU-f-G4Ng5cN4TZQIqErm/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens Camera Pair</strong>: <a href="https://drive.google.com/file/d/137IznX7TMryi6aABN19VrUN3N-6MAG63/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/122UToq2FEy0TpaGd-5MtdT9Hv5k0BMCh/view?usp=drive_link">results</a>
+  </li> -->
+</ul>
+
+<h5>2024-09-25</h5>
+<ul>
+  <!-- <li>
+  <strong>8-mm Lens Camera Pair</strong>: <a href="https://drive.google.com/file/d/1OLvbSf_az4sr8R4KHTz7-rESujEgselB/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/19YwIu2Ulah9kU-f-G4Ng5cN4TZQIqErm/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens Camera Pair</strong>: <a href="https://drive.google.com/file/d/137IznX7TMryi6aABN19VrUN3N-6MAG63/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/122UToq2FEy0TpaGd-5MtdT9Hv5k0BMCh/view?usp=drive_link">results</a>
+  </li> -->
+</ul>
+
+<p><br></p>
+<h4>Extrinsic Calibration of Camera and IMU</h4>
+
+<p>We
+  We also
+  used the </strong> <a href="https://github.com/ethz-asl/kalibr">Kalibr toolbox</a>
+   to calibrate the extrinsic parameters
+  of the camera and IMU. In front of the AprilTag grid, we
+  excited the sensor device along all IMU axes (both rotational
+  and translational) to complete the external calibration.
+</p>
+
+<h5>2024-07-15</h5>
+<ul>
+  <li>
+  <strong>8-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/file/d/1aryvo8vL_gs86uOOdK5A_w5drrSOw-uW/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1ohuL98XzGUiebZ79qa8mQGxqtfy-ubVh/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/file/d/1xGMhL_mAvzDk7gyK9DMAcAJ-dIQW4_yR/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1xcaIaikNDe7cuOirI9T_Q5sy_c4xi2-5/view?usp=drive_link">results</a>
+  </li>
+</ul>
+
+<h5>2024-08-08</h5>
+<ul>
+  <!-- <li>
+  <strong>8-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/file/d/1aryvo8vL_gs86uOOdK5A_w5drrSOw-uW/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1ohuL98XzGUiebZ79qa8mQGxqtfy-ubVh/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/file/d/1xGMhL_mAvzDk7gyK9DMAcAJ-dIQW4_yR/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1xcaIaikNDe7cuOirI9T_Q5sy_c4xi2-5/view?usp=drive_link">results</a>
+  </li> -->
+</ul>
+
+<h5>2024-09-25</h5>
+<ul>
+  <!-- <li>
+  <strong>8-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/file/d/1aryvo8vL_gs86uOOdK5A_w5drrSOw-uW/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1ohuL98XzGUiebZ79qa8mQGxqtfy-ubVh/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/file/d/1xGMhL_mAvzDk7gyK9DMAcAJ-dIQW4_yR/view?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1xcaIaikNDe7cuOirI9T_Q5sy_c4xi2-5/view?usp=drive_link">results</a>
+  </li> -->
+</ul>
+
+<p><br></p>
+<h4>Extrinsic Calibration of Cameras and LiDAR</h4>
+
+<p>We
+  To calibrate the extrinsic parameters between the RGB camera
+  and the LiDAR, we first stabilize the sensor setup and
+  accumulate several frames of LiDAR point clouds along with
+  the corresponding RGB images captured at the same time.
+  We then use the CAD models of both sensors to provide an
+  initial transformation and carefully fine-tune the alignment
+  using the Manual Calibration Tool in the 
+  <a href=“https://github.com/PJLab-ADG/SensorsCalibration”Calibration>Sensors toolbox</a>
+  , maximizing the overlap between the projected
+  point clouds and the images.
+</p>
+
+<h5>2024-07-15</h5>
+<ul>
+  <li>
+  <strong>8-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/drive/folders/1rvq7Y7ELv1TcFzrjmf5C9HQ-gDKFN8gj?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1rFio_zRPNvLAMtaVCBmYBMoZghpXOwyq/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/drive/folders/1sFnTOGw3nyk2I-kVvYRDLmkZAVeZPbb3?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1HU1OZhHKXVVdCGbMLanPhOcHR6eKXH3h/view?usp=drive_link">results</a>
+  </li>
+</ul>
+
+<h5>2024-08-08</h5>
+<ul>
+  <!-- <li>
+  <strong>8-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/drive/folders/1rvq7Y7ELv1TcFzrjmf5C9HQ-gDKFN8gj?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1rFio_zRPNvLAMtaVCBmYBMoZghpXOwyq/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/drive/folders/1sFnTOGw3nyk2I-kVvYRDLmkZAVeZPbb3?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1HU1OZhHKXVVdCGbMLanPhOcHR6eKXH3h/view?usp=drive_link">results</a>
+  </li> -->
+</ul>
+
+<h5>2024-09-25</h5>
+<ul>
+  <!-- <li>
+  <strong>8-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/drive/folders/1rvq7Y7ELv1TcFzrjmf5C9HQ-gDKFN8gj?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1rFio_zRPNvLAMtaVCBmYBMoZghpXOwyq/view?usp=drive_link">results</a>
+  </li>
+  <li>
+    <strong>16-mm Lens RGB Camera with IMU</strong>: <a href="https://drive.google.com/drive/folders/1sFnTOGw3nyk2I-kVvYRDLmkZAVeZPbb3?usp=drive_link">rawbag</a>, <a href="https://drive.google.com/file/d/1HU1OZhHKXVVdCGbMLanPhOcHR6eKXH3h/view?usp=drive_link">results</a>
+  </li> -->
+</ul>
+
+<p><br></p>
+<h4>Extrinsic Parameters Between GNSS/INS and LiDAR Systems</h4>
+
+<p>We
+  We derived their extrinsic parameters from the CAD installation dimensions.
+</p>
+
+
+<ul>
+  <li>
+  <strong>Extrinsic Parameters</strong>: <a href="https://drive.google.com/file/d/1XMuOoTHZ1j1xvfvoPZLj7WGFf2M5rIdZ/view?usp=drive_link">results</a>
+  </li>
+</ul>
 </article>
 
     <!-- Footer -->    
