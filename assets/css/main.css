@@ -140,6 +140,183 @@ body.sticky-bottom-footer {
 .styled-table input[type="submit"]:hover {
     background-color: #218838;
 }
+/* Competition */
+/* Basic table styling */
+/* Basic table styling */
+#data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #data-table th, #data-table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  #data-table th {
+    background-color: #f4f4f4;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  #data-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  #data-table td {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Hover effect on table header */
+  #data-table th:hover {
+    background-color: #f1f1f1;
+  }
+
+/* Ensure the table has enough width */
+#data-table {
+    width: 100%;
+    table-layout: fixed; /* Fixed table layout to prevent it from resizing awkwardly */
+}
+  
+  /* Styling the table header */
+  #data-table th {
+    background-color: #f4f4f4;
+    padding: 12px;
+    text-align: left;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #data-table th:hover {
+    background-color: #e2e2e2;
+  }
+
+  /* #data-table td:hover {
+    background-color: #e2e2e2;
+  } */
+  
+  /* Competition */
+  .info-box {
+    border: 2px solid #0093E9; /* Light blue border */
+    background-color: #EAF7FF; /* Light blue background */
+    padding: 15px;
+    border-radius: 8px; /* Slightly round the edges */
+    width: 95%;
+    margin: 0 auto;
+  }
+
+
+  .info-title {
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 10px;
+  }
+  .competition-sqe-title {
+    text-align: center;
+    font-weight: 400;
+    /* text-decoration: underline; */
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  .competition-sqe-title-1 {
+    text-align: left;
+    font-weight: 400;
+    text-decoration: underline;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  /* Apply styles to all tables with the class 'sortable-table' */
+.sortable-table th {
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    padding: 4px 8px;
+  }
+  
+  .sortable-table td {
+    font-size: 10px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px 8px;
+  }
+  
+  .sortable-table th span {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+  }
+  
+
+.table-header th {
+    border: 1px solid #000; 
+    font-weight: 400; 
+    background-color: #cddacee7; 
+    color: rgb(0, 0, 0); 
+}
+.sortable-table tr:nth-child(even) {
+background-color: #f2f2f2; 
+}
+.sortable-table tr:nth-child(odd) {
+background-color: #ffffff; 
+}
+
+
+
+#ttc-header:hover, #runtime-header:hover {
+    background-color: #4CAF50;
+    color: white;  
+  }
+  
+#ttc-header:hover span, #runtime-header:hover span {
+color: white;
+}
+  
+
+/* Navigation Menu */
+
+  
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; 
+  }
+  
+  nav ul li {
+    display: inline;
+  }
+
+  
+  nav ul li a {
+    font-size: 15px;
+    text-decoration: none;
+    color: #105fb9;
+    font-weight: bold;
+    padding: 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  nav ul li a:hover {
+    transform: scale(1.1);
+    color: #b3004e;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;  /* Adjust this value as needed */
+  }
 /****************************************************************************/
 
 .container {
