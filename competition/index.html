@@ -144,7 +144,7 @@
       <!-- Nav Bar -->
       <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
         <div class="container">
-          <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/EvTTC/"><span class="font-weight-bold">EvTTC Benchmark</span>   </a>
+          <a class="navbar-brand title font-weight-lighter" href="http://localhost:5500/EvTTC/"><span class="font-weight-bold">EvTTC Benchmark</span>   </a>
           <!-- Navbar Toggle -->
           <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -189,6 +189,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contact Us</a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="https://github.com/NAIL-HNU/evttc_dataset/issues" target="_blank" rel="noopener noreferrer">Dataset Issue</a>
+                    <a class="dropdown-item" href="/EvTTC/submit/">Submit Results</a>
                   </div>
                 </li>
             </ul>
@@ -200,14 +201,44 @@
 <!-- Content -->
 <div class="container mt-5">
   <!-- page.html -->
-    <div class="post">
-
-      <header class="post-header">
+    <!-- <div class="post"> -->
+      <!-- <header class="post-header">
         <h1 class="post-title">Competition</h1>
         <p class="post-description"></p>
-      </header>
+      </header> -->
 
-    <article>
+      <div class="competition-sqe-title">Time-to-Collision Estimation</div>
+      
+      <div class="row">
+            <div class="col-sm mt-3 mt-md-0">
+              <picture>
+                <!-- Fallback to the original file -->
+                <div style="text-align: center;">
+                  <p><img src="/EvTTC/assets/img/competition.png" alt="competition scenarios picture" style="max-width:100%;"></p>
+                </div>
+              </picture>
+            </div>
+      </div>
+
+      <article>
+        <p>
+          This TTC benchmark includes 10 sequences, covering three main types of scenes: CCRs, CCRm, and Slider. You can directly download these datasets and test them on your algorithm.
+        </p>
+        <ul>
+          <!-- Each list item is a link that will scroll to a specific section -->
+          <li><strong> CCRs1-slow:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRs1-medium:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRs1-high:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRs2-low:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRs2-medium:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRs2-high:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRm-low:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> CCRm-medium:</strong> <a href="" target="_blank" rel="noopener noreferrer">hdf5 (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a> </li>
+          <li><strong> Slider-750:</strong> <a href="" target="_blank" rel="noopener noreferrer">rosbag (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">calibration (M)</a></li>
+          <li><strong> Slider-1000:</strong> <a href="" target="_blank" rel="noopener noreferrer">rosbag (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">bbox (M)</a>   |  <a href="" target="_blank" rel="noopener noreferrer">calibration (M)</a></li>
+        </ul>
+      </article>
+  <article>
       <p><br></p>
 
       <style>
@@ -237,13 +268,14 @@
       </li>
     </ul>
   </div>
+
   <p><br></p>
-  <div class="competition-sqe-title">TTC Benchkmark</div>
+  <hr style="border: none; border-top: 3px solid #817d7d; width: 100%; margin: 20px auto;">
 
   <!-- Navigation Menu -->
   <nav>
     <ul>
-      <!-- Each list item is a link that will scroll to a specific section -->
+
       <li><a href="#ccrs1-slow">CCRs1-slow</a></li>
       <li><a href="#ccrs1-medium">CCRs1-medium</a></li>
       <li><a href="#ccrs1-high">CCRs1-high</a></li>
@@ -258,28 +290,29 @@
       <li><a href="#slider-1000">Slider-1000</a></li>
     </ul>
   </nav>
-  
 
-  <hr style="border: none; border-top: 1px solid #817d7d; width: 100%; margin: 20px auto;">
-  <div class="competition-sqe-title-1" id="ccrs1-slow">CCRs1-slow</div>
+
+  <hr style="border: none; border-top: 3px solid #817d7d; width: 100%; margin: 20px auto;">
+  <div class="competition-sqe-title-1">CCRs1-slow</div>
       <table class="sortable-table" id="ccrs1-slow">
         <thead>
-          <tr class="table-header">
-            <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
-            <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrs1-slow', 4, 'ccrs1-slow-ttc-arrow')" style="width: 15%;">
-              \( e_{TTC} \) (%)
-              <span id="ccrs1-slow-ttc-arrow">⬆️</span>
-            </th>
-            <th id="ccrs1-slow-runtime-header" onclick="sortTable('ccrs1-slow', 5, 'ccrs1-slow-runtime-arrow')" style="width: 15%;">
-              Runtime (s)
-              <span id="ccrs1-slow-runtime-arrow">⬆️</span>
-            </th>
-            <th style="width: 25%;">Environment</th>
-          </tr>
-        </thead>
+          <thead class="table-header">
+            <tr>
+              <th style="width: 15%;">Method</th>
+              <th style="width: 10%;">Paper</th>
+              <th style="width: 10%;">Setting</th>
+              <th style="width: 10%;">Code</th>
+              <th id="ttc-header" onclick="sortTable('ccrs1-slow', 4, 'ccrs1-slow-ttc-arrow')" style="width: 15%;">
+                \( e_{TTC} \) (%)
+                <span id="ccrs1-slow-ttc-arrow">⬆️</span>
+              </th>
+              <th id="runtime-header" onclick="sortTable('ccrs1-slow', 5, 'ccrs1-slow-runtime-arrow')" style="width: 15%;">
+                Runtime (s)
+                <span id="ccrs1-slow-runtime-arrow">⬆️</span>
+              </th>
+              <th style="width: 25%;">Environment</th>
+            </tr>
+          </thead>
         <tbody>
           <tr>
             <td>STRTTC</td>
@@ -1279,7 +1312,7 @@
 
       
 
-      <div class="competition-sqe-title-1" id="slider-750">Slider-750</div>
+      <div class="competition-sqe-title-1">Slider-750</div>
       <table class="sortable-table" id="slider-750">
         <thead>
           <tr class="table-header">
@@ -1530,7 +1563,7 @@
           </tr>
         </tbody>
       </table>
-      <br>
+      <br> 
   
     </article>
 
