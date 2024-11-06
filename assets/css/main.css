@@ -241,6 +241,26 @@ body.sticky-bottom-footer {
     font-size: 18px;
   }
 
+  .data-format-title {
+    text-align: left;
+    font-weight: 400;
+    /* text-decoration: underline; */
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  .data-format-title-1 {
+    text-align: left;
+    font-weight: 500;
+    text-decoration: underline;
+    margin-bottom: 10px;
+    font-size: 25px;
+  }
+  .data-format-title-2 {
+    text-align: left;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 18;
+  }
   /* Apply styles to all tables with the class 'sortable-table' */
 .sortable-table th {
     font-size: 12px;

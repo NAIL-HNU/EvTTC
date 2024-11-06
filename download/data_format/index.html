@@ -140,6 +140,13 @@
       </nav>
     </header>
 
+<style>
+  pre, code {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+  }
+</style>
 <!-- Content -->
 <div class="container mt-5">
     <!-- page.html -->
@@ -150,14 +157,46 @@
         <p class="post-description"></p>
         </header>
 
+        <!-- Navigation Menu -->
+        <nav>
+          <!-- <ul> -->
+            <div class="data-format-title">
+            <li><a href="#hdf5">hdf5</a></li>
+            <li><a href="#gt-ttc">gt-ttc</a></li>
+            <li><a href="#rosbag">rosbag</a></li>
+            <li><a href="#submit format">submit format</a></li>
+          </div>
+          <!-- </ul> -->
+        </nav>
+        <hr style="border: none; border-top: 1.5px solid #817d7d; width: 100%; margin: 20px auto;">
         <article>
 
-        <!-- <h4>Data Format</h4> -->
+          <div class="data-format-title-1" id="hdf5">hdf5</div>
+          <div class="data-format-title-2">Event Data</div>
+          <p>
+            Event data is stored in the groups <strong>'/prophesee/left'</strong> and <strong>'/prophesee/right'</strong>.
+            We provide the distortion coefficients and models from calibration.
+          </p>
+          <pre tabindex="0">
+          <code>
+  h5ls -r 2024-07-15-14-53-45.hdf5//prophesee/event_cam_left
+  /calib                   Group
+  /calib/T_to_left_bfs     Dataset {4, 4}
+  /calib/camera_model      Dataset {SCALAR}
+  /calib/distortion_coeffs Dataset {4}
+  /calib/distortion_model  Dataset {SCALAR}
+  /calib/intrinsics        Dataset {4}
+  /calib/resolution        Dataset {2}
+  /ms_map_idx              Dataset {16886}
+  /p                       Dataset {44005484/Inf}
+  /t                       Dataset {44005484/Inf}
+  /x                       Dataset {44005484/Inf}
+  /y                       Dataset {44005484/Inf}
+          </code>
+          </pre>
+          <p><br></p>
 
-        <p><br></p>
-
-        <!-- <p>We provide all data sequences in two different formats (rosbag files and text files) with identical content. All rosbag files are compressed in <a href="https://wiki.ros.org/rosbag/Commandline" target="_blank" rel="noopener noreferrer">bz2 format</a>, and can be easily decompressed by using the <a href="https://github.com/mgaoling/mpl_dataset_toolbox#bag-merger" target="_blank" rel="noopener noreferrer">bag merger function in MPL dataset toolbox</a>.</p> -->
-        <p><br></p>
+          <p><br></p>
         </article>
     </div>
 </div>
