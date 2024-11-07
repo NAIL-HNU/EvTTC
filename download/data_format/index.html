@@ -171,15 +171,32 @@
         <hr style="border: none; border-top: 1.5px solid #817d7d; width: 100%; margin: 20px auto;">
         <article>
 
-          <div class="data-format-title-1" id="hdf5">hdf5</div>
-          <div class="data-format-title-2">Event Data</div>
-          <p>
-            Event data is stored in the groups <strong>'/prophesee/left'</strong> and <strong>'/prophesee/right'</strong>.
-            We provide the distortion coefficients and models from calibration.
-          </p>
-          <pre tabindex="0">
-          <code>
-  h5ls -r 2024-07-15-14-53-45.hdf5//prophesee/event_cam_left
+<div class="data-format-title-1" id="hdf5">hdf5</div>
+<p>
+  The timestamps of the hdf5 data are fully synchronized, so we recommend using this format of data.
+</p>
+
+<div class="data-format-title-2">Base Time</div>
+<p>
+  The base time represents the difference between the timestamps in the hdf5 data and the timestamps in the rosbag data.
+  It is stored in the group <code>'/base_timestamp'</code>.
+</p>
+    <pre tabindex="0">
+  <code>
+  $ h5ls -r 2024-07-15-14-53-45.hdf5/base_timestamp
+  /time                    Dataset {1/Inf}
+  </code>
+    </pre>
+    <br>
+
+<div class="data-format-title-2" id="event data">Event Data</div>
+<p>
+  Event data is stored in the groups <code>'/prophesee/event_cam_left'</code> and <code>'/prophesee/event_cam_right'</code>.
+  We provide the distortion coefficients and models from calibration.
+</p>
+<pre tabindex="0">
+  <code>
+  $ h5ls -r 2024-07-15-14-53-45.hdf5/prophesee/event_cam_left
   /calib                   Group
   /calib/T_to_left_bfs     Dataset {4, 4}
   /calib/camera_model      Dataset {SCALAR}
@@ -192,13 +209,142 @@
   /t                       Dataset {44005484/Inf}
   /x                       Dataset {44005484/Inf}
   /y                       Dataset {44005484/Inf}
-          </code>
-          </pre>
-          <p><br></p>
+  </code>
+</pre>
+  <br>
+    <ul>
+      <li><code>'calib'</code>:
+      <ul>
+        <li><code>'T_to_left_bfs'</code>: Transformation from the frame of the camera to the
+          frame of the Prophesee left event camera.</li>
+      <li><code>'resolution'</code>: (width,  height) resolution.</li>
+      <li><code>'camera_model/instrinsics'</code>: Camera models and coefficients used in <a
+        href="https://github.com/ethz-asl/kalibr/wiki/supported-models"
+        target="_blank" rel="noreferrer noopener"
+      >Kalibr</a>.</li>
+      <li><code>'distortion_model/distortion_coeffs'</code>: Distortion model and coefficients used in <a
+        href="https://github.com/ethz-asl/kalibr/wiki/supported-models"
+        target="_blank" rel="noreferrer noopener"
+      >Kalibr</a>.</li>
+      </ul>
+      </li>
+      <li><code>'ms_map_idx'</code>: Precomputed index for the events for each ms of the dataset.</li>
+      <li>(<code>'x'</code>, <code>'y'</code>, <code>'t'</code>, <code>'p'</code>): Event array with (x, y) coordinate, timestamp, and polarity.</li>
+    </ul>
 
-          <p><br></p>
-        </article>
-    </div>
+
+<div class="data-format-title-2">RGB Data</div>
+<p>
+  RGB data is stored in the groups <code>'/blackflys/left'</code> and <code>'/blackflys/right'</code>.
+</p>
+<pre tabindex="0">
+  <code>
+  $ h5ls -r 2024-07-15-14-53-45.hdf5/blackflys/left
+  /calib                   Group
+  /calib/camera_model      Dataset {SCALAR}
+  /calib/distortion_coeffs Dataset {4}
+  /calib/distortion_model  Dataset {SCALAR}
+  /calib/intrinsics        Dataset {4}
+  /calib/left_exposure_time Dataset {1}
+  /calib/resolution        Dataset {2}
+  /data                    Dataset {338/Inf, 1200, 1920, 3}
+  /prophesee_event_cam_left_ms_map_idx Dataset {338}
+  /ts                      Dataset {338/Inf}
+  </code>
+</pre>
+        <br>
+          <ul>
+            <li><code>'calib'</code>: Camera calibration information. Please refer to the <a href="#event data" rel="noreferrer noopener">Event Data</a> section for more information.
+            </li>
+            <li><code>'data'</code>: Image data in (n, x, y, c) where n is the image index, (x,y) are the pixel coordinates, and c is the channel (RGB).</li>
+            <li><code>'prophesee_event_cam_left_ms_map_idx'</code>: Mapping to the index of event camera data for each image.</li>
+            <li><code>'ts'</code>:  Timestamp of the image.</li>
+          </ul>
+
+
+<div class="data-format-title-2">GNSS/INS Data</div>
+<p>
+  GNSS/INS data is stored in the group <code>'/integratedNavigation/data'</code>.
+</p>
+    <pre tabindex="0">
+  <code>
+  $ h5ls -r 2024-07-15-14-53-45.hdf5/integratedNavigation/data
+  /attitude                Dataset {1734/Inf, 3}
+  /calib                   Group
+  /calib/T_to_lidar        Dataset {4, 4}
+  /position                Dataset {1734/Inf, 3}
+  /ts                      Dataset {1734/Inf}
+  /velocity                Dataset {1734/Inf, 3}
+  </code>
+    </pre>
+            <br>
+              <ul>
+                <li><code>'calib/T_to_lidar'</code>: Transformation from  the frame of the GNSS/INS to  the frame of the LiDAR.</li>
+                <li><code>'attitude'</code>: Attitude information represents the orientation of the GNSS/INS system in the <a href="https://en.wikipedia.org/wiki/World_Geodetic_System" target="_blank" rel="noreferrer noopener">world coordinate system</a>.</li>
+                <li><code>'position'</code>: Position information represents the location of the GNSS/INS system in the <a href="https://en.wikipedia.org/wiki/World_Geodetic_System" target="_blank" rel="noreferrer noopener">world coordinate system</a>.</li>
+                <li><code>'velocity'</code>: Velocity information represents the speed of the GNSS/INS system in the <a href="https://en.wikipedia.org/wiki/World_Geodetic_System" target="_blank" rel="noreferrer noopener">world coordinate system</a>."</li>
+                <li><code>'ts'</code>:  Timestamp of the GNSS/INS data.</li>
+              </ul>
+
+<div class="data-format-title-2">LiDAR Data</div>
+<p>
+  LiDAR data is stored in the group <code>'/livox/lidar'</code>.
+</p>
+    <pre tabindex="0">
+  <code>
+  $ h5ls -r 2024-07-15-14-53-45.hdf5/livox/lidar
+  /calib                   Group
+  /calib/T_to_left_cam     Dataset {4, 4}
+  /calib/T_to_right_cam    Dataset {4, 4}
+  /ms_map_idx              Dataset {16856}
+  /points                  Group
+  /points/t                Dataset {7847346/Inf}
+  /points/x                Dataset {7847346/Inf}
+  /points/y                Dataset {7847346/Inf}
+  /points/z                Dataset {7847346/Inf}
+  </code>
+    </pre>
+      <br>
+        <ul>
+          <li><code>'calib'</code>:</li>
+          <ul>
+            <li><code>'T_to_left_cam'</code>: Transformation from  the frame of the LiDAR to the left RGB camera.</li>
+            <li><code>'T_to_right_cam'</code>: Transformation from  the frame of the LiDAR to the right RGB camera.</li>
+          </ul>
+          <li>(<code>'points/x'</code>, <code>'points/y'</code>, <code>'points/z'</code>, <code>'points/p'</code>): Points array with (x, y, z) coordinate and timestamp.</li>
+          <li><code>ms_map_idx</code>:  Precomputed index for the points for each ms of the dataset.</li>
+        </ul> 
+
+
+<div class="data-format-title-2">IMU Data</div>
+<p>
+  IMU data is stored in the group <code>'/livox/imu'</code>.
+</p>
+    <pre tabindex="0">
+  <code>
+  $ h5ls -r 2024-07-15-14-53-45.hdf5/livox/imu
+  /angular_vel             Dataset {3521/Inf, 3}
+  /calib                   Group
+  /calib/T_to_left_cam     Dataset {4, 4}
+  /calib/T_to_right_cam    Dataset {4, 4}
+  /linear_accel            Dataset {3521/Inf, 3}
+  /ts                      Dataset {3521/Inf}
+  </code>
+    </pre>
+      <br>
+        <ul>
+          <li><code>'calib'</code>:</li>
+          <ul>
+            <li><code>'T_to_left_cam'</code>: Transformation from  the frame of the IMU to the left RGB camera.</li>
+            <li><code>'T_to_right_cam'</code>: Transformation from  the frame of the IMU to the right RGB camera.</li>
+          </ul>
+          <li><code>'angular_vel'</code>: Angular velocity provided by the IMU.</li>
+          <li><code>'linear_accel'</code>: Linear acceleration provided by the IMU.</li>
+          <li><code>'ts'</code>: Timestamp for the IMU samples.</li>
+        </ul> 
+                
+</article>
+</div>
 </div>
 
     <!-- Footer -->    
