@@ -162,8 +162,8 @@
           <!-- <ul> -->
             <div class="data-format-title">
             <li><a href="#hdf5">hdf5</a></li>
-            <li><a href="#gt-ttc">gt-ttc</a></li>
             <li><a href="#rosbag">rosbag</a></li>
+            <li><a href="#gt-ttc">gt-ttc</a></li>
             <li><a href="#submit format">submit format</a></li>
           </div>
           <!-- </ul> -->
@@ -342,10 +342,122 @@
           <li><code>'linear_accel'</code>: Linear acceleration provided by the IMU.</li>
           <li><code>'ts'</code>: Timestamp for the IMU samples.</li>
         </ul> 
-                
+
+
+<div class="data-format-title-1" id="rosbag">rosbag</div>
+<div class="data-format-title-2">Multi-sensor Platform</div>
+<p>
+  The timestamps in the rosbag data from the multi-sensor platform are synchronized, except for the event data. We recommend using the unpacked <a href="#hdf5">hdf5</a> file mentioned above.
+</p>
+<ul>
+<li><code>'/event_cam_left/events'</code> (<a 
+  href="https://github.com/ros-event-camera/event_camera_msgs/blob/master/msg_ros1/EventPacket.msg" 
+  target="_blank" rel="noreferrer noopener" 
+  >event_camera_msgs/EventPacket</a>): Events from the left event camera.</li>
+
+<li><code>'/event_cam_right/events'</code> (<a 
+  href="https://github.com/ros-event-camera/event_camera_msgs/blob/master/msg_ros1/EventPacket.msg" 
+  target="_blank" rel="noreferrer noopener" 
+  >event_camera_msgs/EventPacket</a>): Events from the right event camera.</li>
+
+<li><code>'/stereo/left/image_color/compressed'</code> (<a 
+  href="https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/CompressedImage.html" 
+  target="_blank" rel="noreferrer noopener" 
+  >sensor_msgs/CompressedImage</a>): Color images from the left RGB camera.</li>
+
+<li><code>'/stereo/right/image_color/compressed'</code> (<a 
+  href="https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/CompressedImage.html" 
+  target="_blank" rel="noreferrer noopener" 
+  >sensor_msgs/CompressedImage</a>): Color images from the right RGB camera.</li>
+
+<li><code>'/integratedNavigation/data'</code> (<a 
+  href="https://github.com/kaizhenSun/integrated_navigation/tree/main/msg" 
+  target="_blank" rel="noreferrer noopener" 
+  >integrated_navigation/integratedNavigationMsgx1</a>): Pose from GNSS/INS (UG005 X1).</li>
+
+<li><code>'/livox/imu'</code> (<a 
+  href="https://docs.ros.org/en/lunar/api/sensor_msgs/html/msg/Imu.html" 
+  target="_blank" rel="noreferrer noopener" 
+  >sensor_msgs/Imu</a>): Acceleration and angular velocity from IMU.</li>
+
+<li><code>'/livox/lidar'</code> (<a 
+  href="https://github.com/Livox-SDK/livox_ros_driver2/blob/master/msg/CustomMsg.msg" 
+  target="_blank" rel="noreferrer noopener" 
+  >livox_ros_driver2/CustomMsg</a>): Point clouds from the LiDAR.</li>
+</ul>
+
+<div class="data-format-title-2">Small-scale Testbed</div>
+<p>
+  The data format of the rosbag from the small-scale testbed is as follows:
+</p>
+
+<ul>
+  <li><code>'/dvs/events'</code> (<a 
+    href="https://github.com/uzh-rpg/rpg_dvs_ros/blob/master/dvs_msgs/msg/EventArray.msg" 
+    target="_blank" rel="noreferrer noopener" 
+    >dv_ros_msgs/EventArray</a>): Events from the Inivation DVXplorer camera.</li>
+
+  <li><code>'/aps/image_raw'</code> (<a 
+    href="https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Image.html" 
+    target="_blank" rel="noreferrer noopener" 
+    >sensor_msgs/Image</a>): Color images from the RGB camera.</li>
+
+  <li><code>'/dvs/bounding_box'</code> (<a 
+    href="https://github.com/NAIL-HNU/splitter_driver/blob/main/strttc_msgs/msg/boundingbox_message.msg" 
+    target="_blank" rel="noreferrer noopener" 
+    >strttc_msgs/boundingbox_message</a>): The bounding box of the collision target in the event camera's pixel coordinate system.</li>
+
+  <li><code>'/gt_ttc'</code> (<a 
+    href="https://github.com/NAIL-HNU/splitter_driver/blob/main/strttc_msgs/msg/ttc_message.msg" 
+    target="_blank" rel="noreferrer noopener" 
+    >strttc_msgs/ttc_message</a>): Ground truth TTC.</li>
+</ul>
+
+
+<div class="data-format-title-1" id="gt-ttc">gt-ttc</div>
+<p>
+  The format of the ground truth TTC (<strong>gt_ttc.csv files</strong>) is as follows:
+</p>
+<pre tabindex="0">
+  <code>
+  gt_ttc.csv:
+  Index     timestamp (s)      distance (m)      velocity (m/s)      ttc (s)
+    <!-- 1200	11.546007	9.564283	5.350043	1.787702 -->
+  </code>
+</pre>
+<br>
+<ul>
+  <li><code>'Index'</code>: The index corresponding to the TTC.</li>
+  <li><code>'timestamp'</code>: The timestamp corresponding to the TTC.</li>
+  <li><code>'distance'</code>: Relative distance between the host vehicle and the target object.</li>
+  <li><code>'velocity'</code>: Relative velocity between the host vehicle and the target object.</li>
+  <li><code>'ttc'</code>: The value of the ground truth TTC.</li>
+</ul>
+<div class="data-format-title-1" id="submit format">submit format</div>
+<p>
+  If you want to submit the results of your algorithm to the leaderboard, please follow the format below:
+</p>
+
+<pre tabindex="0">
+  <code>
+  results.txt:
+  Index     timestamp (s)      ttc (s)     cost time(s)  
+  </code>
+</pre>
+<br>
+<ul>
+  <li><code>'Index'</code>: The index corresponding to the TTC.</li>
+  <li><code>'timestamp'</code>: The timestamp corresponding to the TTC.</li>
+  <li><code>'ttc'</code>: The value of the estimated TTC.</li>
+  <li><code>'cost time'</code>: The time consumed for a single TTC estimation.</li>
+</ul>
 </article>
+<p><br></p>
+<p><br></p>
 </div>
 </div>
+
+
 
     <!-- Footer -->    
     <footer class="fixed-bottom">
