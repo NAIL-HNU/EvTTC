@@ -56,46 +56,55 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
 
-<script> 
+
+<script>
   let ascendingOrder = true; // Track sorting direction for both columns
 
   function sortTable(tableId, columnIndex, arrowId) {
-  const table = document.getElementById(tableId);
-  const rows = Array.from(table.getElementsByTagName("tr")).slice(1); // Exclude the header row
-  const arrowElement = document.getElementById(arrowId);
+    const table = document.getElementById(tableId);
+    const rows = Array.from(table.getElementsByTagName("tr")).slice(1); // Exclude the header row
+    const arrowElement = document.getElementById(arrowId);
 
-  // Sort rows based on the columnIndex
-  const sortedRows = rows.sort((rowA, rowB) => {
-    const valueA = parseFloat(rowA.cells[columnIndex].textContent); // Column value
-    const valueB = parseFloat(rowB.cells[columnIndex].textContent);
-    return ascendingOrder ? valueA - valueB : valueB - valueA;
-  });
+    // Sort rows based on the columnIndex, excluding the first column (index 0)
+    const sortedRows = rows.sort((rowA, rowB) => {
+      const valueA = parseFloat(rowA.cells[columnIndex].getAttribute('data-value')); // Get numeric value from data-value
+      const valueB = parseFloat(rowB.cells[columnIndex].getAttribute('data-value'));
+      
+      return ascendingOrder ? valueA - valueB : valueB - valueA; // Sorting logic
+    });
 
-  // Append sorted rows back to the table body
-  sortedRows.forEach(row => table.appendChild(row));
+    // Reorder the rows in the table body
+    const tbody = table.querySelector('tbody');
+    sortedRows.forEach(row => tbody.appendChild(row)); // Append sorted rows back into tbody
 
-  // Update arrow direction
-  if (ascendingOrder) {
-    arrowElement.textContent = "⬇️";
-    arrowElement.style.transform = "rotate(0deg)";
-  } else {
-    arrowElement.textContent = "⬆️";
-    arrowElement.style.transform = "rotate(0deg)";
-  }
+    // After sorting, update the first column (index) with the correct sequence
+    sortedRows.forEach((row, index) => {
+      row.cells[0].textContent = index + 1; // Reassign the sequence number in the first column
+    });
 
-  // Reset other arrows to default, if any
-  document.querySelectorAll(`#${tableId} th span`).forEach(span => {
-    if (span.id !== arrowId) {
-      span.textContent = "⬆️";
-      span.style.transform = "rotate(0deg)";
+    // Update arrow direction
+    if (ascendingOrder) {
+      arrowElement.textContent = "⬆️";
+      arrowElement.style.transform = "rotate(0deg)";
+    } else {
+      arrowElement.textContent = "⬇️";
+      arrowElement.style.transform = "rotate(180deg)";  // Rotate 180 degrees for descending
     }
-  });
 
-  // Toggle the sorting direction for next click
-  ascendingOrder = !ascendingOrder;
-}
+    // Reset other arrows to default, if any
+    document.querySelectorAll(`#${tableId} th span`).forEach(span => {
+      if (span.id !== arrowId) {
+        span.textContent = "⬆️";
+        span.style.transform = "rotate(0deg)";
+      }
+    });
 
+    // Toggle sorting direction for next click
+    ascendingOrder = !ascendingOrder;
+  }
 </script>
+
+
     <style>
       table {
         width: 100%;
@@ -302,25 +311,28 @@
         <thead>
           <thead class="table-header">
             <tr>
+              <th style="width: 5%;"></th>
               <th style="width: 15%;">Method</th>
-              <th style="width: 10%;">Paper</th>
+              <th style="width: 8%;">Paper</th>
+              <th style="width: 8%;">Code</th>
               <th style="width: 10%;">Setting</th>
-              <th style="width: 10%;">Code</th>
-              <th id="ttc-header" onclick="sortTable('ccrs1-slow', 4, 'ccrs1-slow-ttc-arrow')" style="width: 15%;">
+              <th id="ttc-header" onclick="sortTable('ccrs1-slow', 5, 'ccrs1-slow-ttc-arrow')" style="width: 15%;">
                 \( e_{TTC} \) (%)
                 <span id="ccrs1-slow-ttc-arrow">⬆️</span>
               </th>
-              <th id="runtime-header" onclick="sortTable('ccrs1-slow', 5, 'ccrs1-slow-runtime-arrow')" style="width: 15%;">
+              <th id="runtime-header" onclick="sortTable('ccrs1-slow', 6, 'ccrs1-slow-runtime-arrow')" style="width: 15%;">
                 Runtime (s)
                 <span id="ccrs1-slow-runtime-arrow">⬆️</span>
               </th>
-              <th style="width: 25%;">Environment</th>
+              <th style="width: 35%;">Environment</th>
             </tr>
           </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -330,14 +342,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>7.54</td>
-            <td>0.031</td>
+            <td data-value="7.54">7.54</td>
+            <td data-value="0.031">0.031</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -347,14 +360,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>2.56</td>
-            <td>3.833</td>
+            <td data-value="2.56">2.56</td>
+            <td data-value="3.833">3.833</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -364,14 +378,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>45.11</td>
-            <td>0.081</td>
+            <td data-value="45.11">45.11</td>
+            <td data-value="0.081">0.081</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -381,14 +396,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>15.15</td>
-            <td>0.156</td>
+            <td data-value="15.15">15.15</td>
+            <td data-value="0.156">0.156</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -398,14 +414,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>39.57</td>
-            <td>\( 4.2\times10^{-5}\)</td>
+            <td data-value="39.57">39.57</td>
+            <td data-value="4.2e-5">\( 4.2\times10^{-5}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -415,9 +432,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>5.37</td>
-            <td>0.036</td>
+            <td data-value="5.37">5.37</td>
+            <td data-value="0.036">0.036</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -429,25 +445,28 @@
           <table class="sortable-table" id="ccrs1-medium">
             <thead class="table-header">
               <tr>
+                <th style="width: 5%;"></th>
                 <th style="width: 15%;">Method</th>
-                <th style="width: 10%;">Paper</th>
+                <th style="width: 8%;">Paper</th>
+                <th style="width: 8%;">Code</th>
                 <th style="width: 10%;">Setting</th>
-                <th style="width: 10%;">Code</th>
-                <th id="ttc-header" onclick="sortTable('ccrs1-medium', 4, 'ccrs1-medium-ttc-arrow')" style="width: 15%;">
+                <th id="ttc-header" onclick="sortTable('ccrs1-medium', 5, 'ccrs1-medium-ttc-arrow')" style="width: 15%;">
                   \( e_{TTC} \) (%)
                   <span id="ccrs1-medium-ttc-arrow">⬆️</span>
                 </th>
-                <th id="runtime-header" onclick="sortTable('ccrs1-medium', 5, 'ccrs1-medium-runtime-arrow')" style="width: 15%;">
+                <th id="runtime-header" onclick="sortTable('ccrs1-medium', 6, 'ccrs1-medium-runtime-arrow')" style="width: 15%;">
                   Runtime (s)
                   <span id="ccrs1-medium-runtime-arrow">⬆️</span>
                 </th>
-                <th style="width: 25%;">Environment</th>
+                <th style="width: 35%;">Environment</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
                 <td>STRTTC</td>
                 <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+                <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
                 <td> 
                   <div>
                     <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -457,14 +476,15 @@
                     alt="Event Camera: Method uses events from Prophesee EVKv4">
                   </div>
                 </td>
-                <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-                <td>9.64</td>
-                <td>0.026</td>
+                <td data-value="9.64">9.64</td>
+                <td data-value="0.026">0.026</td>
                 <td>6800H @ 3.2 Ghz (matlab)</td>
               </tr>
               <tr>
+                <td>2</td>
                 <td>CMax</td>
                 <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+                <td></td>
                 <td>
                   <div>
                     <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -474,14 +494,15 @@
                     alt="Event Camera: Method uses events from Prophesee EVKv4">
                   </div>
                 </td>
-                <td></td>
-                <td>3.44</td>
-                <td>3.701</td>
+                <td data-value="3.44">3.44</td>
+                <td data-value="3.701">3.701</td>
                 <td>6800H @ 3.2 Ghz (matlab)</td>
               </tr>
               <tr>
+                <td>3</td>
                 <td>ETTCM</td>
                 <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+                <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
                 <td>
                   <div>
                     <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -491,14 +512,15 @@
                     alt="Event Camera: Method uses events from Prophesee EVKv4">
                   </div>
                 </td>
-                <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-                <td>44.94</td>
-                <td>0.081</td>
+                <td data-value="44.94">44.94</td>
+                <td data-value="0.081">0.081</td>
                 <td>i7-13700K @ 3.4 Ghz (C++)</td>
               </tr>
               <tr>
+                <td>4</td>
                 <td>FAITH</td>
                 <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+                <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
                 <td>
                   <div>
                     <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -508,14 +530,15 @@
                     alt="Event Camera: Method uses events from Prophesee EVKv4">
                   </div>
                 </td>
-                <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-                <td>20.63</td>
-                <td>0.155</td>
-                <td>i7-13700K @ 3.4 Ghz (C++)</td>
+                <td data-value="20.63">20.63</td>
+                <td data-value="0.155">0.155</td>
+                <td data-value="">i7-13700K @ 3.4 Ghz (C++)</td>
               </tr>
               <tr>
+                <td>5</td>
                 <td>AEB-Tracker</td>
                 <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+                <td></td>
                 <td>
                   <div>
                     <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -525,14 +548,15 @@
                     alt="Event Camera: Method uses events from Prophesee EVKv4">
                   </div>
                 </td>
-                <td></td>
-                <td>42.41</td>
-                <td>\( 3.9\times10^{-5}\)</td>
+                <td data-value="42.41">42.41</td>
+                <td data-value="3.9e-5">\( 3.9\times10^{-5}\)</td>
                 <td>i7-13700K @ 3.4 Ghz (C++)</td>
               </tr>
               <tr>
+                <td>6</td>
                 <td>Image's FoE</td>
                 <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+                <td></td>
                 <td>
                   <div>
                     <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -542,9 +566,8 @@
                     alt="RGB Camera: Method uses images from FLIR Blackfly S">
                   </div>
                 </td>
-                <td></td>
-                <td>5.12</td>
-                <td>0.031</td>
+                <td data-value="5.12">5.12</td>
+                <td data-value="0.031">0.031</td>
                 <td>6800H @ 3.2 Ghz (matlab)</td>
               </tr>
             </tbody>
@@ -556,26 +579,29 @@
       <div class="competition-sqe-title-1">CCRs1-high</div>
       <table class="sortable-table" id="ccrs1-high">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrs1-high', 4, 'ccrs1-high-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('ccrs1-high', 5, 'ccrs1-high-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="ccrs1-high-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('ccrs1-high', 5, 'ccrs1-high-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('ccrs1-high', 6, 'ccrs1-high-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="ccrs1-high-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -585,14 +611,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>7.78</td>
-            <td>0.045</td>
+            <td data-value="7.78">7.78</td>
+            <td data-value="0.045">0.045</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -602,14 +629,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>7.39</td>
-            <td>3.228</td>
+            <td data-value="7.39">7.39</td>
+            <td data-value="3.228">3.228</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -619,14 +647,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>43.03</td>
-            <td>0.300</td>
+            <td data-value="43.03">43.03</td>
+            <td data-value="0.300">0.300</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -636,14 +665,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>19.51</td>
-            <td>0.337</td>
+            <td data-value="19.51">19.51</td>
+            <td data-value="0.377">0.337</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -653,14 +683,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>39.04</td>
-            <td>\(1.1\times10^{-5}\)</td>
+            <td data-value="39.04">39.04</td>
+            <td data-value="1.1e-5" >\(1.1\times10^{-5}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -670,9 +701,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>5.12</td>
-            <td>0.031</td>
+            <td data-value="5.12">5.12</td>
+            <td data-value="0.031">0.031</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -683,26 +713,29 @@
       <div class="competition-sqe-title-1">CCRs2-low</div>
       <table class="sortable-table" id="ccrs2-low">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrs2-low', 4, 'ccrs2-low-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('ccrs2-low', 5, 'ccrs2-low-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="ccrs2-low-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('ccrs2-low', 5, 'ccrs2-low-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('ccrs2-low', 6, 'ccrs2-low-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="ccrs2-low-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -712,14 +745,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>8.15</td>
-            <td>0.024</td>
+            <td data-value="8.15">8.15</td>
+            <td data-value="0.024">0.024</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -729,14 +763,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>5.04</td>
-            <td>3.246</td>
+            <td data-value="5.04">5.04</td>
+            <td data-value="3.246">3.246</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -746,14 +781,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>48.83</td>
-            <td>0.350</td>
+            <td data-value="48.83">48.83</td>
+            <td data-value="0.350">0.350</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -763,14 +799,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>25.83</td>
-            <td>0.169</td>
+            <td data-value="25.83">25.83</td>
+            <td data-value="0.169">0.169</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -780,14 +817,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>37.09</td>
-            <td>\( 9.4\times10^{-6}\)</td>
+            <td data-value="37.09">37.09</td>
+            <td data-value="9.4e-6">\( 9.4\times10^{-6}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -797,9 +835,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>3.76</td>
-            <td>0.031</td>
+            <td data-value="3.76">3.76</td>
+            <td data-value="0.031">0.031</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -810,26 +847,29 @@
       <div class="competition-sqe-title-1">CCRs2-medium</div>
       <table class="sortable-table" id="ccrs2-medium">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrs2-medium', 4, 'ccrs2-medium-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('ccrs2-medium', 5, 'ccrs2-medium-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="ccrs2-medium-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('ccrs2-medium', 5, 'ccrs2-medium-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('ccrs2-medium', 6, 'ccrs2-medium-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="ccrs2-medium-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -839,14 +879,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>11.83</td>
-            <td>0.024</td>
+            <td data-value="11.83">11.83</td>
+            <td data-value="0.024">0.024</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -856,14 +897,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>11.20</td>
-            <td>3.449</td>
+            <td data-value="11.20">11.20</td>
+            <td data-value="3.449">3.449</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -873,14 +915,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>52.84</td>
-            <td>0.098</td>
+            <td data-value="52.84">52.84</td>
+            <td data-value="0.098">0.098</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -890,14 +933,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>47.45</td>
-            <td>0.191</td>
+            <td data-value="47.45">47.45</td>
+            <td data-value="0.191">0.191</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -907,14 +951,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>43.17</td>
-            <td>\(7.3\times10^{-6}\)</td>
+            <td data-value="43.17">43.17</td>
+            <td data-value="7.3e-6">\(7.3\times10^{-6}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -924,9 +969,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>3.85</td>
-            <td>0.031</td>
+            <td data-value="3.85">3.85</td>
+            <td data-value="0.031">0.031</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -937,26 +981,29 @@
       <div class="competition-sqe-title-1">CCRs2-high</div>
       <table class="sortable-table" id="ccrs2-high">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrs2-high', 4, 'ccrs2-high-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('ccrs2-high', 5, 'ccrs2-high-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="ccrs2-high-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('ccrs2-high', 5, 'ccrs2-high-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('ccrs2-high', 6, 'ccrs2-high-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="ccrs2-high-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -966,14 +1013,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>13.68</td>
-            <td>0.028</td>
+            <td data-value="13.68">13.68</td>
+            <td data-value="0.028">0.028</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -983,14 +1031,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>11.10</td>
-            <td>3.826</td>
+            <td data-value="11.10">11.10</td>
+            <td data-value="3.826">3.826</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1000,14 +1049,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>49.46</td>
-            <td>0.127</td>
+            <td data-value="49.46">49.46</td>
+            <td data-value="0.127">0.127</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1017,14 +1067,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>49.62</td>
-            <td>0.165</td>
+            <td data-value="49.62">49.62</td>
+            <td data-value="0.165">0.165</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1034,14 +1085,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>42.43</td>
-            <td>\(6\times10^{-6}\)</td>
+            <td data-value="42.43">42.43</td>
+            <td data-value="6e-6">\(6\times10^{-6}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1051,9 +1103,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>2.92</td>
-            <td>0.031</td>
+            <td data-value="2.92">2.92</td>
+            <td data-value="0.031">0.031</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -1064,26 +1115,29 @@
       <div class="competition-sqe-title-1">CCRm-low</div>
       <table class="sortable-table" id="ccrm-low">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrm-low', 4, 'ccrm-low-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('ccrm-low', 5, 'ccrm-low-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="ccrm-low-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('ccrm-low', 5, 'ccrm-low-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('ccrm-low', 6, 'ccrm-low-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="ccrm-low-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1093,14 +1147,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>9.87</td>
-            <td>0.031</td>
+            <td data-value="9.87">9.87</td>
+            <td data-value="0.031">0.031</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1110,14 +1165,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>9.27</td>
-            <td>3.658</td>
+            <td data-value="9.27">9.27</td>
+            <td data-value="3.658">3.658</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1127,14 +1183,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>71.05</td>
-            <td>0.059</td>
+            <td data-value="71.05">71.05</td>
+            <td data-value="0.059">0.059</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1144,14 +1201,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>75.78</td>
-            <td>0.116</td>
+            <td data-value="75.78">75.78</td>
+            <td data-value="0.116">0.116</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1161,14 +1219,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>26.95</td>
-            <td>\(1\times10^{-5}\)</td>
+            <td data-value="26.95">26.95</td>
+            <td data-value="1e-5">\(1\times10^{-5}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1178,9 +1237,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>5.60</td>
-            <td>0.027</td>
+            <td data-value="5.60">5.60</td>
+            <td data-value="0.027">0.027</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -1191,26 +1249,29 @@
       <div class="competition-sqe-title-1">CCRm-medium</div>
       <table class="sortable-table" id="ccrm-medium">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('ccrm-medium', 4, 'ccrm-medium-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('ccrm-medium', 5, 'ccrm-medium-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="ccrm-medium-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('ccrm-medium', 5, 'ccrm-medium-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('ccrm-medium', 6, 'ccrm-medium-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="ccrm-medium-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1220,14 +1281,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>10.36</td>
-            <td>0.023</td>
+            <td data-value="10.36">10.36</td>
+            <td data-value="0.023">0.023</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1237,14 +1299,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>14.73</td>
-            <td>3.657</td>
+            <td data-value="14.73">14.73</td>
+            <td data-value="3.657">3.657</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1254,14 +1317,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>58.00</td>
-            <td>0.121</td>
+            <td data-value="58.00">58.00</td>
+            <td data-value="0.121">0.121</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1271,14 +1335,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>56.26</td>
-            <td>0.11</td>
+            <td data-value="56.26">56.26</td>
+            <td data-value="0.11">0.11</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1288,14 +1353,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>35.99</td>
-            <td>\(1.1\times10^{-5}\)</td>
+            <td data-value="35.99">35.99</td>
+            <td data-value="1.1e-5">\(1.1\times10^{-5}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1305,9 +1371,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>3.86</td>
-            <td>0.026</td>
+            <td data-value="3.86">3.86</td>
+            <td data-value="0.026">0.026</td>
             <td>6800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -1319,26 +1384,29 @@
       <div class="competition-sqe-title-1">Slider-750</div>
       <table class="sortable-table" id="slider-750">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('slider-750', 4, 'slider-750-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('slider-750', 5, 'slider-750-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="slider-750-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('slider-750', 5, 'slider-750-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('slider-750', 6, 'slider-750-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="slider-750-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1348,14 +1416,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>8.95</td>
-            <td>0.015</td>
+            <td data-value="8.95">8.95</td>
+            <td data-value="0.015">0.015</td>
             <td>5800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1365,14 +1434,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>4.16</td>
-            <td>0.85</td>
+            <td data-value="4.16">4.16</td>
+            <td data-value="0.85">0.85</td>
             <td>5800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1382,14 +1452,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>18.99</td>
-            <td>0.498</td>
+            <td data-value="18.99">18.99</td>
+            <td data-value="0.498">0.498</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1399,14 +1470,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>34.45</td>
-            <td>0.186</td>
+            <td data-value="34.45">34.45</td>
+            <td data-value="0.186">0.186</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1416,14 +1488,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>157.88</td>
-            <td>\(1\times10^{-5}\)</td>
+            <td data-value="157.88">157.88</td>
+            <td data-value="1e-5">\(1\times10^{-5}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1433,9 +1506,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>11.35</td>
-            <td>0.013</td>
+            <td data-value="11.35">11.35</td>
+            <td data-value="0.013">0.013</td>
             <td>5800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
@@ -1446,26 +1518,29 @@
       <div class="competition-sqe-title-1">Slider-1000</div>
       <table class="sortable-table" id="slider-1000">
         <thead>
-          <tr class="table-header">
+          <tr>
+            <th style="width: 5%;"></th>
             <th style="width: 15%;">Method</th>
-            <th style="width: 10%;">Paper</th>
+            <th style="width: 8%;">Paper</th>
+            <th style="width: 8%;">Code</th>
             <th style="width: 10%;">Setting</th>
-            <th style="width: 10%;">Code</th>
-            <th id="ttc-header" onclick="sortTable('slider-1000', 4, 'slider-1000-ttc-arrow')" style="width: 15%;">
+            <th id="ttc-header" onclick="sortTable('slider-1000', 5, 'slider-1000-ttc-arrow')" style="width: 15%;">
               \( e_{TTC} \) (%)
               <span id="slider-1000-ttc-arrow">⬆️</span>
             </th>
-            <th id="runtime-header" onclick="sortTable('slider-1000', 5, 'slider-1000-runtime-arrow')" style="width: 15%;">
+            <th id="runtime-header" onclick="sortTable('slider-1000', 6, 'slider-1000-runtime-arrow')" style="width: 15%;">
               Runtime (s)
               <span id="slider-1000-runtime-arrow">⬆️</span>
             </th>
-            <th style="width: 25%;">Environment</th>
+            <th style="width: 35%;">Environment</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>1</td>
             <td>STRTTC</td>
             <td><a href="https://arxiv.org/abs/2407.07324" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
             <td> 
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1475,14 +1550,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/NAIL-HNU/event_aided_ttc" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>12.43</td>
-            <td>0.016</td>
+            <td data-value="12.43">12.43</td>
+            <td data-value="0.016">0.016</td>
             <td>5800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>2</td>
             <td>CMax</td>
             <td><a href="https://arxiv.org/abs/1804.01306" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1492,14 +1568,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>2.74</td>
-            <td>0.93</td>
+            <td data-value="2.74">2.74</td>
+            <td data-value="0.93">0.93</td>
             <td>5800H @ 3.2 Ghz (matlab)</td>
           </tr>
           <tr>
+            <td>3</td>
             <td>ETTCM</td>
             <td><a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Nunes_Time-to-Contact_Map_by_Joint_Estimation_of_Up-to-Scale_Inverse_Depth_and_ICCV_2023_paper.pdf" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1509,14 +1586,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/neuromorphic-paris/ETTCM" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>15.20</td>
-            <td>0.191</td>
+            <td data-value="15.20">15.20</td>
+            <td data-value="0.191">0.191</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>4</td>
             <td>FAITH</td>
             <td><a href="https://ieeexplore.ieee.org/document/9497701" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1526,14 +1604,15 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td><a href="https://github.com/tudelft/faith" target="_blank" rel="noopener noreferrer">code</a></td>
-            <td>47.94</td>
-            <td>0.233</td>
+            <td data-value="47.94">47.94</td>
+            <td data-value="0.233">0.233</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>5</td>
             <td>AEB-Tracker</td>
             <td><a href="https://arxiv.org/html/2307.10593v3" target="_blank" rel="noopener noreferrer">paper</a></td>
+            <td></td>
             <td>
               <div>
                 <img src="/EvTTC/assets/img/icon/icon-16mm.png" class="icon-img-table"
@@ -1543,12 +1622,12 @@
                 alt="Event Camera: Method uses events from Prophesee EVKv4">
               </div>
             </td>
-            <td></td>
-            <td>165.56</td>
-            <td>\(7.8\times10^{-6}\)</td>
+            <td data-value="165.56">165.56</td>
+            <td data-value="7.8e-6">\(7.8\times10^{-6}\)</td>
             <td>i7-13700K @ 3.4 Ghz (C++)</td>
           </tr>
           <tr>
+            <td>6</td>
             <td>Image's FoE</td>
             <td><a href="https://ieeexplore.ieee.org/document/7477608" target="_blank" rel="noopener noreferrer">paper</a></td>
             <td>
@@ -1560,9 +1639,8 @@
                 alt="RGB Camera: Method uses images from FLIR Blackfly S">
               </div>
             </td>
-            <td></td>
-            <td>7.55</td>
-            <td>0.012</td>
+            <td data-value="7.55">7.55</td>
+            <td data-value="0.012">0.012</td>
             <td>5800H @ 3.2 Ghz (matlab)</td>
           </tr>
         </tbody>
