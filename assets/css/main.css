@@ -223,6 +223,14 @@ body.sticky-bottom-footer {
     margin: 0 auto;
   }
 
+  .info-box3 {
+    border: 3px solid #f3dbe1; /* Light blue border */
+    background-color: #f3dbe1; /* Light blue background */
+    padding: 15px;
+    border-radius: 8px; /* Slightly round the edges */
+    width: 100%;
+    margin: 0 auto;
+  }
 
   .info-title {
     text-align: center;
