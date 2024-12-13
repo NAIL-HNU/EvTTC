@@ -171,14 +171,15 @@
 
 <h4>Intrinsic and Extrinsic Calibration of Cameras</h4>
 
-<p>We
-  used the </strong> <a href="https://github.com/ethz-asl/kalibr">Kalibr toolbox</a>
-  to calibrate the two camera pairs
-  individually. The clocks of the cameras were synchronized
-  using external trigger signals. We employed the simple image
-  recon library to reconstruct the event stream at the midpoint
-  of the RG image exposure. This library utilizes the methods
-  described in Frequency Cam.
+<p>
+  We use the <a href="https://github.com/ethz-asl/kalibr">Kalibr toolbox</a> to estimate the intrinsic and
+  extrinsic parameters for the two camera pairs separately.
+  Since the Kalibr toolbox requires image-format data for camera calibration, we utilize the Simple Image Reconstruction
+  library 1
+  to recover frames from raw event data. For accurate
+  extrinsic parameters estimation, we first synchronize the
+  event and RGB cameras using the synchronization scheme, and then perform image reconstruction at the
+  midpoint of each image’s exposure time.
 </p>
 <div class="content-box">
 
@@ -228,12 +229,11 @@
 <h4>Extrinsic Calibration of Camera and IMU</h4>
 
 <p>
-  We also
-  used the </strong> <a href="https://github.com/ethz-asl/kalibr">Kalibr toolbox</a>
-   to calibrate the extrinsic parameters
-  of the camera and IMU. In front of the AprilTag grid, we
-  excited the sensor device along all IMU axes (both rotational
-  and translational) to complete the external calibration.
+  For the extrinsic calibration between the cameras and the IMU, we
+  effectively stimulate the sensor suite along the six degrees
+  of freedom of the IMU in front of an AprilTag grid pattern
+  and record the corresponding sequences. The <a href="https://github.com/ethz-asl/kalibr">Kalibr toolbox</a>
+  is then used to perform the extrinsic calibration.
 </p>
 
 <div class="content-box">
@@ -284,16 +284,13 @@
 <h4>Extrinsic Calibration of Cameras and LiDAR</h4>
 
 <p>
-  To calibrate the extrinsic parameters between the RG camera
-  and the LiDAR, we first stabilize the sensor setup and
-  accumulate several frames of LiDAR point clouds along with
-  the corresponding RG images captured at the same time.
-  We then use the CAD models of both sensors to provide an
-  initial transformation and carefully fine-tune the alignment
-  using the Manual Calibration Tool in the 
-  <a href=“https://github.com/PJLab-ADG/SensorsCalibration”Calibration>Sensors toolbox</a>
-  , maximizing the overlap between the projected
-  point clouds and the images.
+  The extrinsic calibration between the RGB cameras and the
+  LiDAR is performed as follows. We first keep the sensor
+  suite static in a structured outdoor scene, and then record
+  multiple point cloud frames along with the corresponding
+  RGB images. The initial guess for the calibration is provided
+  using the CAD statistics of the sensor suite, followed by finetuning with the <a href=“https://github.com/PJLab-ADG/SensorsCalibration”Calibration>Sensors Calibration toolbox</a> that refines
+  the extrinsic parameters.
 </p>
 <div class="content-box">
   <h5>2024-07-15</h5>

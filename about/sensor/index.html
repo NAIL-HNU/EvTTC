@@ -150,41 +150,57 @@
             <p class="post-description"></p>
           </header>
 
-          <article>
-            <p><br></p>
-
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-      <picture>
-        <!-- Fallback to the original file -->
-        <div style="text-align: center;">
-          <p><img src="/EvTTC/assets/img/eye_catcher3.png" alt="sensor" style="max-width:98%;"></p>
-        </div>
-      </picture>
-    </div>
-</div>
-<div class="caption" style="text-align: justify; width: 100%; margin: 0 auto;">
-Fig. 1 Left: An overview of the data collection setup. Right: The top 
-image shows a bird's-eye view of the vehicle on the highway, with fields 
-of view and detection distances indicated by circled letters. The bottom row presents
- intensity images and accumulated event data captured by both the Medium Focal-Length and 
- Telephoto-Lens camera pairs.
-</div>
-
-<p><br></p>
 <article>
+
+  <div class="competition-sqe-title">Multi-Sensor Platform</div>
+  <p><br></p>
+  <div class="row">
+      <div class="col-sm mt-3 mt-md-0">
+        <picture>
+          <!-- Fallback to the original file -->
+          <div style="text-align: center;">
+            <p><img src="/EvTTC/assets/img/mult_sensors.png" alt="sensor" style="max-width:100%;"></p>
+          </div>
+        </picture>
+      </div>
+  </div>
+
+
+<!-- <p><br></p> -->
 <p>
-  The raw data used for estimating TTC contain RGB images
-  and corresponding event streams. The employed event camera is Prophesee
+  The raw data used for estimating TTC contain RGB images and corresponding event streams. To cover a relatively
+  complete sensing range, we employ two groups of RGBEvent camera pair equipped with lens of different focal
+  length. The camera pair using 8-mm lens consists of an
+  RGB camera and an event camera, and it covers the close
+  sensing range. As a complementary, the
+  camera pair using 16-mm lens is used to cover the distant
+  sensing range. In each pair, the event
+  camera and the RGB camera are rigidly attached with a
+  narrow baseline of 4 cm, and thus, the extrinsic parameters
+  (w.r.t the coordinate system of the sensor suite) can be
+  approximately shared, simplifying data fusion across the two
+  sensor modalities. The employed event camera is Prophesee
   EVK-v4 (sensor size 1/2.5”) that has a spatial resolution of
   1280 × 720 pixels. To ensure a similar field of view (FOV),
   an FLIR Blackfly-S RGB camera (sensor size 1/2.3”) with a
   1920×1200 resolution is used and equipped with an identical
-  lens. 
-  To provide ground truth for the dataset, an automotive-
-  grade solid-state LiDAR (Livox HAP (TX)) and two high-performance
-  GNSS/INS units (UG005 X1 and CGI-610) were prepared.
-  Detailed parameters of each device can be found in the <a href="/EvTTC/assets/pdf/EvTTC.pdf">paper</a>.</p>
+  lens.
+</p>
+<p>
+  The ground-truth data consists of depth information observed from the host vehicle and the involved two vehicles’ motion status (e.g., position, speed, and orientation, etc). To
+  provide these information, we employ a solid-state LiDAR and two high-performance GNSS/INS units. A
+  Livox HAP LiDAR is rigidly attached to the two camera
+  pairs and used for collecting ground-truth depth. As for the
+  GNSS/INS devices, a UG005 X1 device is used on the
+  host vehicle, and a CGI-610 device is used on the lead
+  vehicle, both for providing high-frequency motion status
+  of the platform. Note that international organizations of
+  vehicle safety assessment, such as Euro New Car Assessment
+  Program (NCAP), require the motion status of involved
+  vehicles to be collected at a frequency of no lower than
+  100 Hz. To this end, both GNSS/INS units are configured to
+  provide motion status at 100 Hz.
+</p>
 
 <ul>
   <li>
@@ -197,6 +213,53 @@ of view and detection distances indicated by circled letters. The bottom row pre
   <li><a href="https://www.bynav.com/en/products/gnss-ins-integration/x-one.html" target="_blank" rel="noopener noreferrer">UG005 X1</a></li>
   <li><a href="https://chcnav.com/product-detail/cgi+-+610" target="_blank" rel="noopener noreferrer">CGI-610</a></li>
 </ul>
+
+<p><br></p>
+
+<div class="competition-sqe-title">Small-Scale Testbed</div>
+<p><br></p>
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+      <picture>
+        <!-- Fallback to the original file -->
+        <div style="text-align: center;">
+          <p><img src="/EvTTC/assets/img/slider.png" alt="sensor" style="max-width:100%;"></p>
+        </div>
+      </picture>
+    </div>
+</div>
+
+<p>
+  The testbed consists of a hybrid optical system, a linear rail and a 1:24 scale model vehicle.
+Specifically, the hybrid optical system comprises an DVXplorer event camera, an RGB camera, and a beam splitter.
+The beam splitter divides the incoming light into two paths,
+ensuring that both cameras share a unified field of view,
+facilitating pixel-level correspondence between the event and
+RGB cameras. To achieve precise time synchronization, a
+micro-controller is used to generate two synchronized 25
+Hz pulse signals, which are employed to simultaneously
+trigger both cameras. The linear rail has an effective travel
+distance of 2 meters, with a control system that includes
+a servomotor, a driver, and an STM32 development board.
+Besides, a 1:24 scale model vehicle is positioned in front
+of the camera, being used as the potential collision target.
+The hybrid optical system is rigidly mounted on the slider,
+which can be propelled towards the target under accurate
+control of speed.
+</p>
+
+<ul>
+  <li><a href="https://inivation.com/buy/" target="_blank" rel="noopener noreferrer">Inivation DVXplorer</a></li>
+  <li><a href="https://en.daheng-imaging.com/show-104-1894-1.html" target="_blank" rel="noopener noreferrer">DAHENG MER2</a></li>
+  <li><a href="https://rxkj58.com/Rxp45.html" target="_blank" rel="noopener noreferrer">RXP45-2000</a></li>
+</ul>
+
+<p><strong>Open Source</strong></p>
+<p>Design of the <a href="" target="_blank" rel="noopener noreferrer">CAD model</a> for the small-scale TTC testbed.</p>
+
+<p><br></p>
+<p><br></p>
+
 </article>
 
 <!-- Footer -->    

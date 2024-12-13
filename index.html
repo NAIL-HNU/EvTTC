@@ -140,77 +140,87 @@
       </nav>
     </header>
 
-    <!-- Content -->
-    <div class="container mt-5">
-      <!-- home.html -->
-      <div class="post">
-        <header class="post-header">
-          <h1 class="post-title">
-           <span class="font-weight-bold">EvTTC Benchmark</span>  
-          </h1>
-          <p class="desc">An Event Camera Dataset for Time-to-Collision Estimation</p>
-        </header>
+<!-- Content -->
+<div class="container mt-5">
+  <!-- home.html -->
+  <div class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        <span class="font-weight-bold">EvTTC Benchmark</span>  
+      </h1>
+      <p class="desc">An Event Camera Dataset for Time-to-Collision Estimation</p>
+    </header>
 
-        <article>
-          
+<article>
+  <div class="clearfix">
+    <p><br></p>
+    <p><img src="/EvTTC/assets/img/web_header.png" alt="sensor" style="max-width:100%;"></p>
 
-          <div class="clearfix">
-            <p><br></p>
+    <p><br></p>
+    <p>We present an event camera dataset, called EvTTC, for the task of time-to-collision estimation in autonomous driving:</p>
+    <ul>
+      <li>A diverse set of sequences featuring various targets,
+        such as real vehicles, inflatable vehicles, and dummies,
+        across a wide range of relative speeds, including both
+        routine and challenging situations.</li>
+      <li>A low-cost and small-scale TTC testbed that facilitates
+        the generation of quasi-real data at different relative
+        speeds. The design of the testbed is open-source.</li>
+      <li>A specific benchmark for the TTC task that can serve
+        as an evaluation platform for the community to test and
+        compare different TTC estimation methods.</li>
+    </ul>
+    <p><br></p>
+  </div>
 
-<p><img src="/EvTTC/assets/img/real_scene.png" alt="sensor" style="max-width:98%;"></p>
+  <!-- News -->          
+  <div class="news">
+    <h2>News</h2>
+    <div class="table-responsive">
+      <table class="table table-sm table-borderless"> 
+        <tr>
+          <th scope="row">Dec. 5, 2024</th>
+          <td>
+            Watch our video on <a href="https://www.youtube.com/watch?v=qJC016GK888" target="_blank" rel="noopener noreferrer">Youtube</a>.
+          </td>
+        </tr> 
+        <tr>
+          <th scope="row">Nov. 5, 2024</th>
+          <td>
+            EvTTC Benchmark goes live!
+          </td>
+        </tr> 
+      </table>
+    </div> 
+  </div>
 
-<p><br></p>
-
-<p>We present an event camera dataset, called EvTTC, for the task of time-to-collision estimation in autonomous driving:</p>
-
-<ul>
-  <li>A diverse set of sequences featuring various targets,
-    such as real vehicles, inflatable vehicles, and dummies,
-    across a wide range of relative speeds, including both
-    routine and challenging situations.</li>
-  <li>A low-cost and small-scale TTC testbed that facilitates
-    the generation of quasi-real data at different relative
-    speeds. The design of the testbed is open-source.</li>
-  <li>A specific benchmark for the TTC task that can serve
-    as an evaluation platform for the community to test and
-    compare different TTC estimation methods.</li>
-</ul>
-
-<p><br></p>
-
-          </div>
-
-          <!-- News -->          
-          <div class="news">
-            <h2>News</h2>
-            <div class="table-responsive">
-              <table class="table table-sm table-borderless"> 
-                <tr>
-                  <th scope="row">Nov. 5, 2024</th>
-                  <td>
-                    EvTTC Benchmark goes live!
- 
-                  </td>
-                </tr> 
-              </table>
-            </div> 
-          </div>
-
-          <!-- Selected papers -->
-          <div class="publications">
-            <h2>BibTeX</h2>
-            Please cite the following publication when using this benchmark in an academic context:
-            <h2></h2>
-            <ol class="bibliography"><li>
-<!-- _layouts/bib.html -->
+  <!-- Selected papers -->
+  <div class="publications">
+    <h2>BibTeX</h2>
+    Please cite the following publication when using this benchmark in an academic context:
+    <pre>
+    <code>
+      @misc{sun2024aneventcameradatasetfortime-to-collisionestion,
+        title         = {EvTTC: An Event Camera Dataset for Time-to-Collision Estimation},
+        author        = {Kaizhen Sun and Jinghang Li and Kuan Dai and Bangyan Liao and Wei Xiong and Yi Zhou},
+        year          = 2024,
+        eprint        = {2412.05053},
+        archiveprefix = {arXiv},
+        primaryclass  = {cs.CV}
+      }
+    </code>
+    </pre>
+    <h2></h2>
+  <ol class="bibliography"><li>
+    <!-- _layouts/bib.html -->
       <div class="row">
 
           <!-- Links/Buttons -->
           <div class="links">
             <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
-            <a href="http://arxiv.org/" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener noreferrer">arXiv</a>
-            <a href="/EvTTC/assets/pdf/EvTTC.pdf" class="btn btn-sm z-depth-0" role="button">PDF</a>
-            <a href="/EvTTC/assets/pdf/supplementary_material.pdf" class="btn btn-sm z-depth-0" role="button">Supp</a>
+            <a href="https://arxiv.org/pdf/2412.05053" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener noreferrer">arXiv</a>
+            <a href="https://youtu.be/qJC016GK888" class="btn btn-sm z-depth-0" role="button" target="_blank" rel="noopener noreferrer">VIDEO</a>
+            <!-- <a href="/EvTTC/assets/pdf/supplementary_material.pdf" class="btn btn-sm z-depth-0" role="button">Supp</a> -->
           </div>
 
           <!-- Hidden abstract block -->
@@ -246,41 +256,40 @@
           </div>
         </div>
       </div>
-</li></ol>
-          </div>
-          <br>
+  </li></ol>
 
-          <!-- License -->
-          <div class="License">
-            <h2>License</h2>
-            This datasets, along with documentation and toolbox, are released under the <a href="https://spdx.org/licenses/BSD-3-Clause-Clear.html" target="_blank" rel="noopener noreferrer">BSD 3-Clause Clear License</a>.
-          </div>
-          <br>
-          <br>
+    <br>
+  <!-- License -->
+  <div class="License">
+    <h2>License</h2>
+    This datasets, along with documentation and toolbox, are released under the <a href="https://spdx.org/licenses/BSD-3-Clause-Clear.html" target="_blank" rel="noopener noreferrer">BSD 3-Clause Clear License</a>.
+  </div>
+  <br>
+  <br>
 
-          <!-- Acknowledgements -->
-          <div class="Acknowledgement">
-            <h2>Acknowledgement</h2>
-            This work was supported by the National Key Research and Development
-            Project of China (grant number 2023YFB4706600), as well as the generous support provided by our industry partner <a href="https://www.cidi.ai/" target="_blank" rel="noopener noreferrer">Xidi Zhijia (Hunan) Co., Ltd.</a>.
-          </div>
-          <br>
-          <br>
+  <!-- Acknowledgements -->
+  <div class="Acknowledgement">
+    <h2>Acknowledgement</h2>
+    This work was supported by the National Key Research and Development
+    Project of China (grant number 2023YFB4706600), as well as the generous support provided by our industry partner <a href="https://www.cidi.ai/" target="_blank" rel="noopener noreferrer">Xidi Zhijia (Hunan) Co., Ltd.</a>.
+  </div>
+  <br>
+  <br>
 
-          <!-- Social -->
-          <div class="social">
-            <div class="contact-icons">
-            <a href="https://nail-hnu.github.io/EvTTC/" title="EvTTC Datasets" target="_blank" rel="noopener noreferrer"><i class="fas fa-home"></i></a> <!-- fab fa-blogger-b -->
-            <a href="https://sites.google.com/view/zhouyi-joey/home" title="The Neuromorphic Automation and Intelligence Lab" target="_blank" rel="noopener noreferrer"><i class="fas fa-link"></i></a> <!-- fa-briefcase -->
-            <a href="mailto:kaizhen@hnu.edu.cn" title="E-mail"><i class="fas fa-envelope"></i></a>
-            </div>
+  <!-- Social -->
+  <div class="social">
+    <div class="contact-icons">
+    <a href="https://nail-hnu.github.io/EvTTC/" title="EvTTC Datasets" target="_blank" rel="noopener noreferrer"><i class="fas fa-home"></i></a> <!-- fab fa-blogger-b -->
+    <a href="https://sites.google.com/view/zhouyi-joey/home" title="The Neuromorphic Automation and Intelligence Lab" target="_blank" rel="noopener noreferrer"><i class="fas fa-link"></i></a> <!-- fa-briefcase -->
+    <a href="mailto:kaizhen@hnu.edu.cn" title="E-mail"><i class="fas fa-envelope"></i></a>
+    </div>
 
-            <div class="contact-note">
-              
-            </div>
-            
-          </div>
-        </article>
+    <div class="contact-note">
+      
+    </div>
+    
+  </div>
+  </article>
 
     <!-- Footer -->    
     <footer class="fixed-bottom">

@@ -151,39 +151,29 @@
           </header>
 
 <article>
-<p><br></p>
-
-
+<div class="competition-sqe-title">TTC</div>
 <p>
-  We define the ground-truth TTC as the ratio of the
-relative distance to the relative velocity along the z axis
-in the coordinate system of the telephoto camera pair. All
-subsequent data are transformed into the camera coordinate
-system using the extrinsic parameters between the sensors.
+  The ground-truth data for depth and vehicle motion status
+  in all sequences are obtained through LiDAR and GNSS/INS
+  units, respectively. Specifically, the motion
+  status data for the DCV are collected using the UG005 X1
+  unit, while the CGI-610 unit is used to collect motion status
+  data for the GVT only in the CCRm scenario. In other scenarios, since the collision target does
+  not move along the camera’s optical axis, the position of the
+  collision target can be determined by measuring the distance
+  between the DCV and the target using LiDAR. Please refer to the <a href="https://arxiv.org/pdf/2412.05053" target="_blank" rel="noopener noreferrer">paper</a> for details.
 </p>
+
+<div class="competition-sqe-title">Pose and Depth</div>
 <p>
-  For real-world road scenario data, the relative distance
-and velocity between the vehicles were obtained using
-GNSS/INS and LiDAR sensors mounted on the vehicles.
-First, the position and velocity of the DCV in the camera
-coordinate system were obtained through the GNSS/INS on
-the DCV. Then, during GVT motion scenarios, the position
-and velocity of the GVT in the camera coordinate system
-were obtained via its GNSS/INS. In static GVT scenarios,
-the distance between the DCV and GVT, after the DCV
-comes to a stop, was measured using LiDAR to determine the
-GVT's position in the camera coordinate system. We used
-the positions and velocities of the DCV and GVT in the
-camera coordinate system to calculate their relative distance
-and velocity, deriving the ground truth TTC at 100 Hz.
-</p>
-<p>
-  We also provide ground truth pose and depth for EvTTC.
-  First, poses and velocity-compensated LiDAR scans were
-  obtained using the LiDAR odometry FAST-LIO2. Sub-
-  sequently, multiple frames of point clouds were accumulated,
-  and occlusions were removed from the point clouds, as
-  described in M3ED.
+  We use the LiDAR odometry FASTLIO2 to obtain ground-truth poses and velocitycompensated point clouds. For each pose, we extract the
+relative poses of several preceding and succeeding point
+cloud frames to generate local point clouds. Next, the Hidden
+Point Removal (HPR) operator is applied to eliminate
+occlusion effects in the local point clouds. Finally, the local
+point clouds are projected into the RGB camera coordinate
+frames of the 8-mm and 16-mm lens camera pairs to obtain
+ground-truth depth.
 </p>
 </article>
 

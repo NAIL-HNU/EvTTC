@@ -68,11 +68,12 @@ body.sticky-bottom-footer {
 /****************************************************************************/
 
 .content-box {
-    border: 2px solid #000; /* Add black border */
-    padding: 15px;          /* Add padding inside the box */
-    margin-bottom: 20px;    /* Add margin below the box */
-    border-radius: 10px;    /* Add rounded corners */
-    background-color: #fafafa; /* Add background color */
+    border: 2px solid #0093E9; /* Light blue border */
+    background-color: #EAF7FF; /* Light blue background */
+    padding: 15px;
+    border-radius: 8px; /* Slightly round the edges */
+    width: 100%;
+    margin: 0 auto;
 }
 
 
